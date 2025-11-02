@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mahmoud Al Tarrass Digital Card</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@600&display=swap" rel="stylesheet">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Almarai:wght@600&display=swap');
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Almarai', sans-serif;
+      background: linear-gradient(135deg, #0a0a0a, #0500aa 60%, #000);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+      overflow-x: hidden;
+      color: #fff;
+      padding: 30px 15px;
+      position: relative;
+      -webkit-font-smoothing: antialiased;
+      user-select: none;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(0,255,255,0.15), transparent 70%);
+      z-index: -1;
+      animation: bgMove 15s infinite linear;
+    }
+
+    @keyframes bgMove {
+      0% { transform: translate(-50%, -50%); }
+      100% { transform: translate(-25%, -25%); }
+    }
+
+    /* Honor Board Popup */
+    .honor-popup {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.92);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 99;
+      opacity: 1;
+      transition: opacity 1.5s ease;
+      padding: 20px;
+    }
+
+    .honor-popup.hide {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .honor-content {
+      background: linear-gradient(135deg, #0500aa, #0a0a0a);
+      padding: clamp(25px, 6vw, 40px);
+      border-radius: 20px;
+      text-align: center;
+      box-shadow: 0 0 40px rgba(0,255,255,0.6), 0 0 80px rgba(0, 255, 255, 0.25);
+      animation: honorFade 1.8s ease-in-out;
+      max-width: 600px;
+      width: 95%;
+    }
+
+    @keyframes honorFade {
+      from { opacity: 0; transform: scale(0.85); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .honor-content h2 {
+      font-size: clamp(24px, 5vw, 30px);
+      margin-bottom: 25px;
+      color: #00ffff;
+      text-shadow: 0 0 15px rgba(0,255,255,0.4);
+    }
+
+    .person {
+      margin: 18px 0;
+      font-size: clamp(16px, 4vw, 19px);
+      font-weight: bold;
+      color: #fff;
+    }
+
+    .person span {
+      display: block;
+      font-size: clamp(13px, 3.5vw, 15px);
+      font-weight: normal;
+      color: #ccc;
+      margin-top: 4px;
+    }
+
+    /* الكارت الرئيسي */
+    .card {
+      background: rgba(255, 255, 255, 0.06);
+      padding: clamp(20px, 5vw, 30px);
+      border-radius: 20px;
+      box-shadow: 0 12px 40px rgba(0, 255, 255, 0.25);
+      backdrop-filter: blur(20px) saturate(180%);
+      width: 90%;
+      max-width: 420px;
+      text-align: center;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 1.5s ease, transform 1.5s ease;
+      z-index: 1;
+      margin: 30px 0;
+      flex-grow: 1;
+    }
+
+    .card.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .card img {
+      width: clamp(90px, 28vw, 130px);
+      height: clamp(90px, 28vw, 130px);
+      border-radius: 50%;
+      margin-bottom: 18px;
+      border: 3px solid #00ffff;
+      box-shadow: 0 0 25px rgba(0, 255, 255, 0.6);
+      object-fit: cover;
+      object-position: center 60%;
+    }
+
+    .card h1 {
+      font-size: clamp(20px, 5vw, 26px);
+      font-weight: 600;
+      color: #00ffff;
+      margin: 8px 0 5px;
+      text-shadow: 0 0 20px rgba(0, 255, 255, 0.4);
+    }
+
+    .card p {
+      font-size: clamp(14px, 4vw, 17px);
+      color: #ccc;
+      margin-bottom: 25px;
+    }
+
+    /* الروابط */
+    .links {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 25px;
+      width: 100%;
+    }
+
+    .links a {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 85%;
+      max-width: 300px;
+      height: clamp(48px, 11vw, 58px);
+      background: rgba(255, 255, 255, 0.05);
+      color: #00ffff;
+      font-size: clamp(22px, 6vw, 28px);
+      border-radius: 12px;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0, 255, 255, 0.1);
+    }
+
+    .links a:hover {
+      background: rgba(0, 255, 255, 0.18);
+      box-shadow: 0 6px 22px rgba(0, 255, 255, 0.35);
+      transform: translateY(-4px);
+    }
+
+    /* زر التحميل */
+    .download-btn {
+      display: inline-block;
+      margin-top: 15px;
+      padding: 13px 24px;
+      background: rgba(0, 255, 255, 0.12);
+      color: #00ffff;
+      text-decoration: none;
+      border-radius: 12px;
+      font-size: clamp(15px, 4vw, 17px);
+      border: 1.5px solid rgba(0, 255, 255, 0.35);
+      transition: all 0.3s ease;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .download-btn:hover {
+      background: rgba(0, 255, 255, 0.25);
+      box-shadow: 0 0 25px rgba(0, 255, 255, 0.5);
+      transform: translateY(-3px);
+    }
+
+    footer {
+      margin-top: 25px;
+      font-size: clamp(12px, 3vw, 14px);
+      color: #aaa;
+      text-align: center;
+      padding-bottom: 10px;
+    }
+
+    @media (max-height: 600px) {
+      body { padding: 20px 10px; }
+      .card { margin: 15px 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Honor Board Popup -->
+  <div class="honor-popup" id="honorPopup">
+    <div class="honor-content">
+      <h2>Honor Board</h2>
+      <div class="person">
+        Mohammed Rabea
+        <span>Founder & CEO</span>
+      </div>
+      <div class="person">
+        Ahmed Waleed
+        <span>Co-Founder, Investor & CFO</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- الكارت الرئيسي -->
+  <div class="card" id="mainCard">
+    <img src="qsuqDOp5wwgAFtPPtY4Y.jpg" alt="Mahmoud Al Tarrass">
+    <h1>Mahmoud Al Tarrass</h1>
+    <p>Member of the Egyptian Parliament</p>
+
+    <div class="links">
+      <a href="https://wa.me/201019155037" target="_blank"><i class="fab fa-whatsapp"></i></a>
+      <a href="https://t.me/+201019155037" target="_blank"><i class="fab fa-telegram"></i></a>
+      <a href="https://www.facebook.com/mohamedhamymllm" target="_blank"><i class="fab fa-facebook"></i></a>
+      <a href="https://www.tiktok.com/@user020293148" target="_blank"><i class="fab fa-tiktok"></i></a>
+      <a href="https://www.instagram.com/mohamedhamymllm" target="_blank"><i class="fab fa-instagram"></i></a>
+      <a href="tel:+201019155037"><i class="fas fa-phone"></i></a>
+    </div>
+
+    <a class="download-btn" id="downloadQR">Download Link</a>
+    
+    <footer>
+      Designed with ❤️ for Mahmoud Al Tarrass
+    </footer>
+  </div>
+
+  <script>
+    const honorPopup = document.getElementById("honorPopup");
+    const card = document.getElementById("mainCard");
+
+    // إخفاء Honor Board بعد 4.5 ثواني، ثم إظهار الكارت
+    setTimeout(() => {
+      honorPopup.classList.add("hide");
+      setTimeout(() => {
+        honorPopup.style.display = "none";
+        card.classList.add("show");
+      }, 1500);
+    }, 4500);
+
+    // تحميل رابط الصفحة كنص
+    document.getElementById("downloadQR").addEventListener("click", function(e) {
+      e.preventDefault();
+      const pageUrl = window.location.href;
+      const blob = new Blob([pageUrl], { type: "text/plain;charset=utf-8" });
+      saveAs(blob, "Mahmoud_Al_Tarrass_Link.txt");
+    });
+
+    // إغلاق Honor Board عند النقر عليه (اختياري)
+    honorPopup.addEventListener("click", () => {
+      honorPopup.classList.add("hide");
+      setTimeout(() => {
+        honorPopup.style.display = "none";
+        card.classList.add("show");
+      }, 1500);
+    });
+  </script>
+</body>
+</html>
