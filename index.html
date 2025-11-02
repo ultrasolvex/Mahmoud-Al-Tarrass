@@ -8,8 +8,10 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@600&display=swap" rel="stylesheet">
   <style>
+    /* ✅ استدعاء الخط */
     @import url('https://fonts.googleapis.com/css2?family=Almarai:wght@600&display=swap');
 
+    /* ✅ ضبط عام للصفحة */
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
@@ -28,6 +30,7 @@
       user-select: none;
     }
 
+    /* ✅ حركة خلفية ناعمة */
     body::before {
       content: "";
       position: fixed;
@@ -44,7 +47,7 @@
       100% { transform: translate(-25%, -25%); }
     }
 
-    /* Honor Board Popup */
+    /* ✅ شاشة البداية (Honor Board) */
     .honor-popup {
       position: fixed;
       top: 0; left: 0;
@@ -102,7 +105,7 @@
       margin-top: 4px;
     }
 
-    /* الكارت الرئيسي */
+    /* ✅ الكارت الرئيسي */
     .card {
       background: rgba(255, 255, 255, 0.06);
       padding: clamp(20px, 5vw, 30px);
@@ -150,7 +153,7 @@
       margin-bottom: 25px;
     }
 
-    /* الروابط */
+    /* ✅ أزرار التواصل */
     .links {
       display: flex;
       flex-direction: column;
@@ -174,15 +177,23 @@
       text-decoration: none;
       transition: all 0.3s ease;
       box-shadow: 0 4px 15px rgba(0, 255, 255, 0.1);
+      
+      /* ✅ إضافة حدود أكوا لكل مستطيل */
+      border: 2px solid rgba(0, 255, 255, 0.35);
+
+      /* ✅ إضافة شادو خفيف ناعم متناسق */
+      box-shadow: 0 0 10px rgba(0, 255, 255, 0.25);
     }
 
+    /* ✅ تأثير عند مرور الماوس */
     .links a:hover {
       background: rgba(0, 255, 255, 0.18);
-      box-shadow: 0 6px 22px rgba(0, 255, 255, 0.35);
+      box-shadow: 0 0 25px rgba(0, 255, 255, 0.45);
       transform: translateY(-4px);
+      border-color: rgba(0, 255, 255, 0.65);
     }
 
-    /* زر التحميل */
+    /* ✅ زر التحميل */
     .download-btn {
       display: inline-block;
       margin-top: 15px;
@@ -253,7 +264,7 @@
     <a class="download-btn" id="downloadQR">Download Link</a>
     
     <footer>
-      Designed with ❤️ for Mahmoud Al Tarrass
+      Designed with 💜 for Mahmoud Al Tarrass
     </footer>
   </div>
 
@@ -261,7 +272,7 @@
     const honorPopup = document.getElementById("honorPopup");
     const card = document.getElementById("mainCard");
 
-    // إخفاء Honor Board بعد 4.5 ثواني، ثم إظهار الكارت
+    // ✅ إخفاء شاشة الـ Honor Board بعد 4.5 ثواني ثم إظهار الكارت
     setTimeout(() => {
       honorPopup.classList.add("hide");
       setTimeout(() => {
@@ -270,7 +281,7 @@
       }, 1500);
     }, 4500);
 
-    // تحميل رابط الصفحة كنص
+    // ✅ تحميل رابط الصفحة كنص
     document.getElementById("downloadQR").addEventListener("click", function(e) {
       e.preventDefault();
       const pageUrl = window.location.href;
@@ -278,7 +289,7 @@
       saveAs(blob, "Mahmoud_Al_Tarrass_Link.txt");
     });
 
-    // إغلاق Honor Board عند النقر عليه (اختياري)
+    // ✅ إغلاق الـ Honor Board عند الضغط عليه (اختياري)
     honorPopup.addEventListener("click", () => {
       honorPopup.classList.add("hide");
       setTimeout(() => {
