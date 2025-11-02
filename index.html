@@ -8,10 +8,8 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@600&display=swap" rel="stylesheet">
   <style>
-    /* ✅ استدعاء الخط */
     @import url('https://fonts.googleapis.com/css2?family=Almarai:wght@600&display=swap');
 
-    /* ✅ ضبط عام للصفحة */
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
@@ -30,7 +28,6 @@
       user-select: none;
     }
 
-    /* ✅ حركة خلفية ناعمة */
     body::before {
       content: "";
       position: fixed;
@@ -47,7 +44,6 @@
       100% { transform: translate(-25%, -25%); }
     }
 
-    /* ✅ شاشة البداية (Honor Board) */
     .honor-popup {
       position: fixed;
       top: 0; left: 0;
@@ -72,7 +68,7 @@
       padding: clamp(25px, 6vw, 40px);
       border-radius: 20px;
       text-align: center;
-      box-shadow: 0 0 40px rgba(0,255,255,0.6), 0 0 80px rgba(0, 255, 255, 0.25);
+      box-shadow: 0 0 40px rgba(0,255,255,0.6), 0 0 80px rgba(0,255,255,0.25);
       animation: honorFade 1.8s ease-in-out;
       max-width: 600px;
       width: 95%;
@@ -105,7 +101,6 @@
       margin-top: 4px;
     }
 
-    /* ✅ الكارت الرئيسي */
     .card {
       background: rgba(255, 255, 255, 0.06);
       padding: clamp(20px, 5vw, 30px);
@@ -129,15 +124,16 @@
     }
 
     .card img {
-      width: clamp(90px, 28vw, 130px);
-      height: clamp(90px, 28vw, 130px);
-      border-radius: 50%;
-      margin-bottom: 18px;
-      border: 3px solid #00ffff;
-      box-shadow: 0 0 25px rgba(0, 255, 255, 0.6);
-      object-fit: cover;
-      object-position: center 60%;
-    }
+  width: clamp(110px, 35vw, 160px);  /* 🔹 تكبير الحجم */
+  height: clamp(110px, 35vw, 160px);
+  border-radius: 50%;
+  margin-bottom: 20px;
+  border: 3px solid #00ffff;
+  box-shadow: 0 0 30px rgba(0, 255, 255, 0.65); /* توهج أقوى بسيط */
+  object-fit: cover;
+  object-position: center 55%; /* تظبيط موضع الوجه */
+}
+
 
     .card h1 {
       font-size: clamp(20px, 5vw, 26px);
@@ -153,7 +149,6 @@
       margin-bottom: 25px;
     }
 
-    /* ✅ أزرار التواصل */
     .links {
       display: flex;
       flex-direction: column;
@@ -176,16 +171,10 @@
       border-radius: 12px;
       text-decoration: none;
       transition: all 0.3s ease;
-      box-shadow: 0 4px 15px rgba(0, 255, 255, 0.1);
-      
-      /* ✅ إضافة حدود أكوا لكل مستطيل */
       border: 2px solid rgba(0, 255, 255, 0.35);
-
-      /* ✅ إضافة شادو خفيف ناعم متناسق */
       box-shadow: 0 0 10px rgba(0, 255, 255, 0.25);
     }
 
-    /* ✅ تأثير عند مرور الماوس */
     .links a:hover {
       background: rgba(0, 255, 255, 0.18);
       box-shadow: 0 0 25px rgba(0, 255, 255, 0.45);
@@ -193,7 +182,6 @@
       border-color: rgba(0, 255, 255, 0.65);
     }
 
-    /* ✅ زر التحميل */
     .download-btn {
       display: inline-block;
       margin-top: 15px;
@@ -231,7 +219,6 @@
 </head>
 <body>
 
-  <!-- Honor Board Popup -->
   <div class="honor-popup" id="honorPopup">
     <div class="honor-content">
       <h2>Honor Board</h2>
@@ -246,25 +233,24 @@
     </div>
   </div>
 
-  <!-- الكارت الرئيسي -->
   <div class="card" id="mainCard">
     <img src="qsuqDOp5wwgAFtPPtY4Y.jpg" alt="Mahmoud Al Tarrass">
     <h1>Mahmoud Al Tarrass</h1>
     <p>Member of the Egyptian Parliament</p>
 
     <div class="links">
-      <a href="https://wa.me/201019155037" target="_blank"><i class="fab fa-whatsapp"></i></a>
-      <a href="https://t.me/+201019155037" target="_blank"><i class="fab fa-telegram"></i></a>
-      <a href="https://www.facebook.com/mohamedhamymllm" target="_blank"><i class="fab fa-facebook"></i></a>
-      <a href="https://www.tiktok.com/@user020293148" target="_blank"><i class="fab fa-tiktok"></i></a>
-      <a href="https://www.instagram.com/mohamedhamymllm" target="_blank"><i class="fab fa-instagram"></i></a>
-      <a href="tel:+201019155037"><i class="fas fa-phone"></i></a>
+      <a href="#" class="temp-link"><i class="fab fa-whatsapp"></i></a>
+      <a href="#" class="temp-link"><i class="fab fa-telegram"></i></a>
+      <a href="#" class="temp-link"><i class="fab fa-facebook"></i></a>
+      <a href="#" class="temp-link"><i class="fab fa-tiktok"></i></a>
+      <a href="#" class="temp-link"><i class="fab fa-instagram"></i></a>
+      <a href="#" class="temp-link"><i class="fas fa-phone"></i></a>
     </div>
 
     <a class="download-btn" id="downloadQR">Download Link</a>
     
     <footer>
-      Designed with 💜 for Mahmoud Al Tarrass
+      Designed with ❤️ for Mahmoud Al Tarrass
     </footer>
   </div>
 
@@ -272,7 +258,6 @@
     const honorPopup = document.getElementById("honorPopup");
     const card = document.getElementById("mainCard");
 
-    // ✅ إخفاء شاشة الـ Honor Board بعد 4.5 ثواني ثم إظهار الكارت
     setTimeout(() => {
       honorPopup.classList.add("hide");
       setTimeout(() => {
@@ -281,15 +266,20 @@
       }, 1500);
     }, 4500);
 
-    // ✅ تحميل رابط الصفحة كنص
+    // ✅ مؤقت - لا يحمل أي ملف الآن
     document.getElementById("downloadQR").addEventListener("click", function(e) {
       e.preventDefault();
-      const pageUrl = window.location.href;
-      const blob = new Blob([pageUrl], { type: "text/plain;charset=utf-8" });
-      saveAs(blob, "Mahmoud_Al_Tarrass_Link.txt");
+      alert("ميزة التحميل غير متاحة حاليًا 🔧");
     });
 
-    // ✅ إغلاق الـ Honor Board عند الضغط عليه (اختياري)
+    // ✅ مؤقت - كل روابط المنصات لا تعمل الآن
+    document.querySelectorAll(".temp-link").forEach(link => {
+      link.addEventListener("click", function(e) {
+        e.preventDefault();
+        alert("المنصة غير مفعّلة حاليًا 🔧");
+      });
+    });
+
     honorPopup.addEventListener("click", () => {
       honorPopup.classList.add("hide");
       setTimeout(() => {
