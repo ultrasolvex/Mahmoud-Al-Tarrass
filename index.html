@@ -124,8 +124,9 @@
     }
 
     .card img {
-  width: clamp(110px, 35vw, 160px);  /* 🔹 تكبير الحجم */
-  height: clamp(110px, 35vw, 160px);
+  width: clamp(130px, 38vw, 190px);
+height: clamp(130px, 38vw, 190px);
+
   border-radius: 50%;
   margin-bottom: 20px;
   border: 3px solid #00ffff;
@@ -250,7 +251,7 @@
     <a class="download-btn" id="downloadQR">Download Link</a>
     
     <footer>
-      Designed with ❤️ for Mahmoud Al Tarrass
+      Designed with 💜 for Mahmoud Al Tarrass
     </footer>
   </div>
 
@@ -259,12 +260,13 @@
     const card = document.getElementById("mainCard");
 
     setTimeout(() => {
-      honorPopup.classList.add("hide");
-      setTimeout(() => {
-        honorPopup.style.display = "none";
-        card.classList.add("show");
-      }, 1500);
-    }, 4500);
+  honorPopup.classList.add("hide");
+  setTimeout(() => {
+    honorPopup.style.display = "none";
+    card.classList.add("show");
+  }, 1500);
+}, 1000);
+
 
     // ✅ مؤقت - لا يحمل أي ملف الآن
     document.getElementById("downloadQR").addEventListener("click", function(e) {
