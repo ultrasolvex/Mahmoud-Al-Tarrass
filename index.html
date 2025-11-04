@@ -7,10 +7,16 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@600&display=swap" rel="stylesheet">
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Almarai:wght@600&display=swap');
 
+  <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* إخفاء الشريط الجانبي */
+    ::-webkit-scrollbar { width: 0; height: 0; }
+    html, body {
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
 
     body {
       font-family: 'Almarai', sans-serif;
@@ -21,11 +27,13 @@
       justify-content: flex-start;
       align-items: center;
       overflow-x: hidden;
+      overflow-y: auto;
       color: #fff;
       padding: 30px 15px;
       position: relative;
       -webkit-font-smoothing: antialiased;
       user-select: none;
+      scroll-behavior: smooth;
     }
 
     body::before {
@@ -44,18 +52,20 @@
       100% { transform: translate(-25%, -25%); }
     }
 
+    /* شاشة الهونر بورد */
     .honor-popup {
       position: fixed;
       top: 0; left: 0;
       width: 100%; height: 100%;
-      background: rgba(0,0,0,0.92);
       display: flex;
       justify-content: center;
       align-items: center;
+      background: rgba(0,0,0,0.92);
       z-index: 99;
       opacity: 1;
       transition: opacity 1.5s ease;
-      padding: 20px;
+      overflow: hidden;
+      padding: 0;
     }
 
     .honor-popup.hide {
@@ -64,14 +74,15 @@
     }
 
     .honor-content {
-      background: linear-gradient(135deg, #0500aa, #0a0a0a);
+      background: linear-gradient(135deg, #0500aa 0%, #0a0a0a 100%);
       padding: clamp(25px, 6vw, 40px);
       border-radius: 20px;
       text-align: center;
-      box-shadow: 0 0 40px rgba(0,255,255,0.6), 0 0 80px rgba(0,255,255,0.25);
+      box-shadow: 0 0 45px rgba(0,255,255,0.6), 0 0 90px rgba(0,255,255,0.25);
       animation: honorFade 1.8s ease-in-out;
       max-width: 600px;
-      width: 95%;
+      width: 90%;
+      margin: 0 auto;
     }
 
     @keyframes honorFade {
@@ -101,6 +112,7 @@
       margin-top: 4px;
     }
 
+    /* الكارت الرئيسي */
     .card {
       background: rgba(255, 255, 255, 0.06);
       padding: clamp(20px, 5vw, 30px);
@@ -112,7 +124,7 @@
       text-align: center;
       opacity: 0;
       transform: translateY(30px);
-      transition: opacity 1.5s ease, transform 1.5s ease;
+      transition: opacity 0.4s ease, transform 0.4s ease;
       z-index: 1;
       margin: 30px 0;
       flex-grow: 1;
@@ -124,17 +136,15 @@
     }
 
     .card img {
-  width: clamp(130px, 38vw, 190px);
-height: clamp(130px, 38vw, 190px);
-
-  border-radius: 50%;
-  margin-bottom: 20px;
-  border: 3px solid #00ffff;
-  box-shadow: 0 0 30px rgba(0, 255, 255, 0.65); /* توهج أقوى بسيط */
-  object-fit: cover;
-  object-position: center 55%; /* تظبيط موضع الوجه */
-}
-
+      width: clamp(130px, 38vw, 190px);
+      height: clamp(130px, 38vw, 190px);
+      border-radius: 50%;
+      margin-bottom: 20px;
+      border: 3px solid #00ffff;
+      box-shadow: 0 0 30px rgba(0, 255, 255, 0.65);
+      object-fit: cover;
+      object-position: center 55%;
+    }
 
     .card h1 {
       font-size: clamp(20px, 5vw, 26px);
@@ -150,6 +160,7 @@ height: clamp(130px, 38vw, 190px);
       margin-bottom: 25px;
     }
 
+    /* الأيقونات */
     .links {
       display: flex;
       flex-direction: column;
@@ -169,17 +180,28 @@ height: clamp(130px, 38vw, 190px);
       background: rgba(255, 255, 255, 0.05);
       color: #00ffff;
       font-size: clamp(22px, 6vw, 28px);
-      border-radius: 12px;
+      border-radius: 15px;
       text-decoration: none;
-      transition: all 0.3s ease;
       border: 2px solid rgba(0, 255, 255, 0.35);
       box-shadow: 0 0 10px rgba(0, 255, 255, 0.25);
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.3s ease;
+    }
+
+    .links a.show {
+      animation: iconUp 0.6s forwards ease-out;
+    }
+
+    @keyframes iconUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     .links a:hover {
       background: rgba(0, 255, 255, 0.18);
-      box-shadow: 0 0 25px rgba(0, 255, 255, 0.45);
-      transform: translateY(-4px);
+      box-shadow: 0 0 30px rgba(0, 255, 255, 0.45);
+      transform: scale(1.05);
       border-color: rgba(0, 255, 255, 0.65);
     }
 
@@ -203,90 +225,79 @@ height: clamp(130px, 38vw, 190px);
       box-shadow: 0 0 25px rgba(0, 255, 255, 0.5);
       transform: translateY(-3px);
     }
-
-    footer {
-      margin-top: 25px;
-      font-size: clamp(12px, 3vw, 14px);
-      color: #aaa;
-      text-align: center;
-      padding-bottom: 10px;
-    }
-
-    @media (max-height: 600px) {
-      body { padding: 20px 10px; }
-      .card { margin: 15px 0; }
-    }
   </style>
 </head>
 <body>
 
+  <!-- شاشة الهونر بورد -->
   <div class="honor-popup" id="honorPopup">
     <div class="honor-content">
       <h2>Honor Board</h2>
       <div class="person">
-        Mohammed Rabea
+        Muhammed Rabee
         <span>Founder & CEO</span>
       </div>
       <div class="person">
-        Ahmed Waleed
-        <span>Co-Founder, Investor & CFO</span>
+        Ahmed Waleed El Saber
+        <span>Co-Founder & Investor</span>
       </div>
     </div>
   </div>
 
+  <!-- الكارت الرئيسي -->
   <div class="card" id="mainCard">
     <img src="qsuqDOp5wwgAFtPPtY4Y.jpg" alt="Mahmoud Al Tarrass">
-    <h1>Mahmoud Al Tarrass</h1>
+    <h1>Mahmoud&nbsp;<span style="white-space: nowrap;">Al Tarrass</span></h1>
     <p>Member of the Egyptian Parliament</p>
 
     <div class="links">
-      <a href="#" class="temp-link"><i class="fab fa-whatsapp"></i></a>
-      <a href="#" class="temp-link"><i class="fab fa-telegram"></i></a>
-      <a href="#" class="temp-link"><i class="fab fa-facebook"></i></a>
-      <a href="#" class="temp-link"><i class="fab fa-tiktok"></i></a>
-      <a href="#" class="temp-link"><i class="fab fa-instagram"></i></a>
-      <a href="#" class="temp-link"><i class="fas fa-phone"></i></a>
+      <a href="https://wa.me/201004021806" target="_blank"><i class="fab fa-whatsapp"></i></a>
+      <a href="https://www.facebook.com/mahmoud.altrras/" target="_blank"><i class="fab fa-facebook"></i></a>
+      <a href="https://www.tiktok.com/@fahdeltras2" target="_blank"><i class="fab fa-tiktok"></i></a>
+      <a href="#" target="_blank"><i class="fab fa-telegram"></i></a>
+      <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
+      <a href="tel:01004021806" target="_blank"><i class="fas fa-phone"></i></a>
     </div>
 
     <a class="download-btn" id="downloadQR">Download Link</a>
-    
-    <footer>
-      Designed with 💜 for Mahmoud Al Tarrass
-    </footer>
   </div>
 
   <script>
     const honorPopup = document.getElementById("honorPopup");
     const card = document.getElementById("mainCard");
+    const icons = document.querySelectorAll(".links a");
 
+    // إظهار الهونر بورد 3 ثواني
     setTimeout(() => {
-  honorPopup.classList.add("hide");
-  setTimeout(() => {
-    honorPopup.style.display = "none";
-    card.classList.add("show");
-  }, 1500);
-}, 1000);
+      honorPopup.classList.add("hide");
+      setTimeout(() => {
+        honorPopup.style.display = "none";
+        card.classList.add("show");
+        icons.forEach((icon, i) => {
+          setTimeout(() => icon.classList.add("show"), i * 150);
+        });
+      }, 1000);
+    }, 3000);
 
-
-    // ✅ مؤقت - لا يحمل أي ملف الآن
+    // زر التحميل
     document.getElementById("downloadQR").addEventListener("click", function(e) {
       e.preventDefault();
-      alert("ميزة التحميل غير متاحة حاليًا 🔧");
+      const blob = new Blob(
+        [`[InternetShortcut]\nURL=https://ultrasolvex.github.io/Mahmoud-Al-Tarrass/`],
+        { type: "text/plain;charset=utf-8" }
+      );
+      saveAs(blob, "Mahmoud-Al-Tarrass.url");
     });
 
-    // ✅ مؤقت - كل روابط المنصات لا تعمل الآن
-    document.querySelectorAll(".temp-link").forEach(link => {
-      link.addEventListener("click", function(e) {
-        e.preventDefault();
-        alert("المنصة غير مفعّلة حاليًا 🔧");
-      });
-    });
-
+    // إغلاق الهونر بالضغط
     honorPopup.addEventListener("click", () => {
       honorPopup.classList.add("hide");
       setTimeout(() => {
         honorPopup.style.display = "none";
         card.classList.add("show");
+        icons.forEach((icon, i) => {
+          setTimeout(() => icon.classList.add("show"), i * 150);
+        });
       }, 1500);
     });
   </script>
