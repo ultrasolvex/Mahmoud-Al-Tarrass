@@ -20,7 +20,7 @@
 
     body {
       font-family: 'Almarai', sans-serif;
-      background: linear-gradient(135deg, #0a0a0a, #0500aa 60%, #000);
+      background: linear-gradient(135deg, #000010, #03008a 60%, #000);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
@@ -52,20 +52,20 @@
       100% { transform: translate(-25%, -25%); }
     }
 
-    /* شاشة الهونر بورد */
+    /* شاشة الشرف */
     .honor-popup {
       position: fixed;
       top: 0; left: 0;
       width: 100%; height: 100%;
+      background: rgba(0,0,0,0.92);
       display: flex;
       justify-content: center;
       align-items: center;
-      background: rgba(0,0,0,0.92);
       z-index: 99;
       opacity: 1;
       transition: opacity 1.5s ease;
+      padding: 20px;
       overflow: hidden;
-      padding: 0;
     }
 
     .honor-popup.hide {
@@ -74,15 +74,14 @@
     }
 
     .honor-content {
-      background: linear-gradient(135deg, #0500aa 0%, #0a0a0a 100%);
+      background: linear-gradient(135deg, #0500aa, #0a0a0a);
       padding: clamp(25px, 6vw, 40px);
       border-radius: 20px;
       text-align: center;
-      box-shadow: 0 0 45px rgba(0,255,255,0.6), 0 0 90px rgba(0,255,255,0.25);
+      box-shadow: 0 0 40px rgba(0,255,255,0.6), 0 0 80px rgba(0,255,255,0.25);
       animation: honorFade 1.8s ease-in-out;
       max-width: 600px;
-      width: 90%;
-      margin: 0 auto;
+      width: 95%;
     }
 
     @keyframes honorFade {
@@ -112,7 +111,7 @@
       margin-top: 4px;
     }
 
-    /* الكارت الرئيسي */
+    /* الكارت */
     .card {
       background: rgba(255, 255, 255, 0.06);
       padding: clamp(20px, 5vw, 30px);
@@ -124,10 +123,9 @@
       text-align: center;
       opacity: 0;
       transform: translateY(30px);
-      transition: opacity 0.4s ease, transform 0.4s ease;
-      z-index: 1;
+      transition: opacity 0.6s ease, transform 0.6s ease;
       margin: 30px 0;
-      flex-grow: 1;
+      z-index: 1;
     }
 
     .card.show {
@@ -152,6 +150,14 @@
       color: #00ffff;
       margin: 8px 0 5px;
       text-shadow: 0 0 20px rgba(0, 255, 255, 0.4);
+    }
+
+    /* الاسم في شاشات صغيرة جدًا */
+    @media (max-width: 400px) {
+      .card h1 {
+        white-space: normal;
+        line-height: 1.2;
+      }
     }
 
     .card p {
@@ -187,8 +193,11 @@
       opacity: 0;
       transform: translateY(30px);
       transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
     }
 
+    /* الأنيميشن */
     .links a.show {
       animation: iconUp 0.6s forwards ease-out;
     }
@@ -198,13 +207,30 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    .links a:hover {
-      background: rgba(0, 255, 255, 0.18);
-      box-shadow: 0 0 30px rgba(0, 255, 255, 0.45);
-      transform: scale(1.05);
-      border-color: rgba(0, 255, 255, 0.65);
+    /* تأثير hover */
+    .links a::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(120deg, transparent, rgba(0,255,255,0.3), transparent);
+      transition: all 0.4s ease;
     }
 
+    .links a:hover::after {
+      left: 100%;
+    }
+
+    .links a:hover {
+      background: rgba(0, 255, 255, 0.18);
+      box-shadow: 0 0 25px rgba(0, 255, 255, 0.5);
+      transform: translateY(-3px) scale(1.02);
+      border-color: rgba(0, 255, 255, 0.7);
+    }
+
+    /* زر التحميل */
     .download-btn {
       display: inline-block;
       margin-top: 15px;
@@ -229,7 +255,6 @@
 </head>
 <body>
 
-  <!-- شاشة الهونر بورد -->
   <div class="honor-popup" id="honorPopup">
     <div class="honor-content">
       <h2>Honor Board</h2>
@@ -244,10 +269,9 @@
     </div>
   </div>
 
-  <!-- الكارت الرئيسي -->
   <div class="card" id="mainCard">
     <img src="qsuqDOp5wwgAFtPPtY4Y.jpg" alt="Mahmoud Al Tarrass">
-    <h1>Mahmoud&nbsp;<span style="white-space: nowrap;">Al Tarrass</span></h1>
+    <h1>Mahmoud Al Tarrass</h1>
     <p>Member of the Egyptian Parliament</p>
 
     <div class="links">
@@ -267,7 +291,7 @@
     const card = document.getElementById("mainCard");
     const icons = document.querySelectorAll(".links a");
 
-    // إظهار الهونر بورد 3 ثواني
+    // ظهور الكارت بعد شاشة الشرف
     setTimeout(() => {
       honorPopup.classList.add("hide");
       setTimeout(() => {
@@ -279,8 +303,8 @@
       }, 1000);
     }, 3000);
 
-    // زر التحميل
-    document.getElementById("downloadQR").addEventListener("click", function(e) {
+    // تحميل الرابط
+    document.getElementById("downloadQR").addEventListener("click", e => {
       e.preventDefault();
       const blob = new Blob(
         [`[InternetShortcut]\nURL=https://ultrasolvex.github.io/Mahmoud-Al-Tarrass/`],
@@ -289,7 +313,7 @@
       saveAs(blob, "Mahmoud-Al-Tarrass.url");
     });
 
-    // إغلاق الهونر بالضغط
+    // إغلاق شاشة الشرف بالضغط
     honorPopup.addEventListener("click", () => {
       honorPopup.classList.add("hide");
       setTimeout(() => {
